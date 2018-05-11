@@ -167,9 +167,9 @@ function getMailingEvents(){
 			}
 		}
 	})
-	//
+	
 }
-
+  
 // Обработка всех видов уведомлений
 function setNotifications() {
     if (window.Notification) {
