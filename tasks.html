@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Текущие задачи</title>
+    <script src="jquery-1.11.2.min.js" type="text/javascript"></script>
+    <script src="jquery-ui.min.js" type="text/javascript"></script>
+    <script src="inputmask.js" type="text/javascript"></script>
+    <script src="jquery.inputmask.js" type="text/javascript"></script>
+    <script src="content.js" type="text/javascript"></script>
+    <link href="style.css" rel="stylesheet" type="text/css"/>
+    <link href="jquery-ui.min.css" rel="stylesheet" type="text/css"/>
+	<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+  </head>
+  <body>
+	<div id="loader"></div>
+	<div id="content">
+		<div class="search" id="jsSearchBlock">
+			<div class="add">
+				<i class="fa fa-plus addbtn"></i>
+				<form class="addform" data-windex="1" tabindex="1">
+					<div><input type="text" name="name" class="req namefld" placeholder="Название" autocomplete="off"></div>
+					<div>
+						<input type="text" name="site" class="req sitefld" id="sitefld" placeholder="Сайт" autocomplete="off">
+						<div id="sitelist" style="display:none;"></div>
+					</div>
+					<div><input type="text" name="time" class="req timefld" placeholder="Затраченное время, ч" autocomplete="off"></div>
+					<div><input type="text" name="date" class="datefld" placeholder="Дата выполнения" autocomplete="off"></div>
+					<div><textarea name="comment" placeholder="Комментарий" autocomplete="off"></textarea></div>
+					<div><input type="submit" value="Добавить"></div>
+				</form>
+				<div id="addTimeSuccess"></div>
+			</div>
+			<div class="sinput">
+				<input type="text" placeholder="Введите имя задачи для поиска" value="">
+			</div>
+		</div>
+		<div id="jsTabs" class="s-plug-tabs" data-for="#jsTabsContent">
+			<div class="active">Выполняемые задачи</div>
+			<div>Новые сообщения</div>
+		</div>
+		<div id="jsTabsContent">
+			<div>
+				<table id="jsStaff" class="s-plug-table">
+				  <thead>
+					<tr>
+					  <th class="name">Сайт</th>
+					  <th class="task">Задача</th>
+					  <th class="time">Время</th>
+					</tr>
+				  </thead>
+				  <tbody></tbody>
+				</table>
+			</div>
+			<div style="display:none;">
+				<table id="jsUnreadTasks" class="s-plug-table">
+				  <tbody>
+					<tr>
+						<td>Новых сообщений не найдено</td>
+					</tr>
+				  </tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+  </body>
+</html>
