@@ -92,7 +92,7 @@ function getRemoteVersion(){
 			){
 				// Высвечиваем сообщение о несовпадении версий
 				$('#jsSearchBlock').after($('<div class="s-plug-warning">Ваш плагин устарел. Пожалуйста, загрузите<br />последнюю версию'+
-											' с сайта <a href="https://tireos.net/_util/download.php?id=272" target="_blank">tireos.net</a></div>'));
+											' с сайта <a href="https://tireos.net/_util/download.php?id=273" target="_blank">tireos.net</a></div>'));
 			}
 		}
 	})
