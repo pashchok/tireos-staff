@@ -13,19 +13,22 @@ function loadScript() {
 		var $srch = $('#content .search .sinput input').val();
 		if($srch==undefined)
 			$srch = "";
-		$.getJSON( "http://tireos.info/staff.info.php?task=getTasks&userid=" + localStorage.userid + "&search="+$srch, function( data ) {
+		$.getJSON( "https://tireos.info/staff.info.php?task=getTasks&userid=" + localStorage.userid + "&search="+$srch, function( data ) {
 			$('#jsStaff tbody').html('');
 			
 			if(data.length){
-				var tbody = '';
+				var tbody = '',
+					hasActive = false;
 				//tbody += '<tr><td colspan="5" class="search"><input type="text" placeholder="Введите имя задачи для поиска" value="'+data[0].TOTAL.SEARCH+'"></td></tr>';
 				$.each( data, function( key, val ) {
 					var active = ( val.RUN === true ) ? ' active' : '',
 						emptybalance = ( val.BALANCE_EMPTY == true ) ? ' emptybalance' : '';
-					var task = ( val.TITLE != false && val.TITLE != undefined ) ? '<a href="http://tireos.info/company/personal/user/' + val.USER_ID + '/tasks/task/view/' + val.TASK_ID + '/" target="_blank">' + val.TITLE + '</a>' : '';
+					var task = ( val.TITLE != false && val.TITLE != undefined ) ? '<a href="https://tireos.info/company/personal/user/' + val.USER_ID + '/tasks/task/view/' + val.TASK_ID + '/" target="_blank">' + val.TITLE + '</a>' : '';
 					var time;
-					if(active)
+					if(active){
 						var $activeTime = parseInt(val.RUN_TIME) + parseInt(val.CURRENT_LENGTH);
+						hasActive = true;
+					}
 					//if ( val.RUN_TIME != false && val.RUN_TIME != undefined ) {
 						time = timeFormat(Number(active ? $activeTime : val.RUN_TIME)*1000);
 					//} else {
@@ -43,11 +46,21 @@ function loadScript() {
 					}
 					tbody += '<tr class="' + active + emptybalance + '"'+ (val.BALANCE_EMPTY ? ' title="Баланс требует пополнения, нельзя продолжить"' : '') +'>' +
 								( (val.NO_RUN || val.BALANCE_EMPTY) ? '<td></td>' : '<td class="play"><i class="fa '+(active?'fa-pause':'fa-play')+' playbtn" data-task="'+val.TASK_ID+'" data-user="'+val.USER_ID+'" data-action="'+(active?'stop':'start')+'"></i></td>') +
-								'<td class="name">' + val.SITE + '</td>' +
+								'<td class="name">' + val.SITE + (val.GROUP_BALANCE == false ? '' : '&nbsp;['+val.GROUP_BALANCE+'&nbsp;руб]')+'</td>' +
 								'<td class="task">' + task + ' ['+val.TASK_ID+']</td>' +
 								'<td class="time" id="taskTimer'+val.TASK_ID+'">' + (time?time:'00:00:00') + '</td>' +
 							  '</tr>';
 				});
+				
+				$ico = hasActive ? "ico2.png" : "ico.png";
+				chrome.browserAction.setIcon({
+				  path : {
+					"48": $ico,
+					"64": $ico,
+					"128": $ico
+				  }
+				});
+				
 				var $remain = data[0].TOTAL.TIMEFULL ? '' : ', осталось: '+data[0].TOTAL.REMAIN+'ч';
 				tbody += '<tr><td colspan="5" class="result'+(data[0].TOTAL.TIMEFULL?' full':'')+'">Наработано: '+data[0].TOTAL.TIME+'ч'+$remain+'</td></tr>';
 			}else{
@@ -105,7 +118,7 @@ function addPlayOptions(){
 		var $action = $(this).data('action');
 		$(this).addClass('wait');
 		$.ajax({
-			url: "http://tireos.info/task.control.php?task="+$task+"&user="+$user+"&action="+$action
+			url: "https://tireos.info/task.control.php?task="+$task+"&user="+$user+"&action="+$action
 		}).done(function(result){
 			loadScript();
 		})
@@ -143,7 +156,7 @@ function loadAddTaskMenu(){
 		$data.time = $this.find('input.timefld').data('time');
 		
 		$.ajax({
-			url:"http://tireos.info/bitrix/templates/bitrix24/components/bitrix/news.list/taskview/add.php",
+			url:"https://tireos.info/bitrix/templates/bitrix24/components/bitrix/news.list/taskview/add.php",
 			data: $data,
 			method: "POST",
 			dataType: "json"
@@ -160,7 +173,7 @@ function loadAddTaskMenu(){
 	})
 	// Получаем список сайтов
 	$.ajax({
-		url:"http://tireos.info/tctrl/site.list.php",
+		url:"https://tireos.info/tctrl/site.list.php",
 		dataType: "json"
 	}).done(function(result){
 		$siteList = result;
@@ -259,7 +272,7 @@ function loadNewMessages($page){
 	if(typeof($page)==='undefined' || !$page)
 		$page = 1;
 	$.ajax({
-		url:"http://tireos.info/_util/plug.php",
+		url:"https://tireos.info/_util/plug.php",
 		method: "POST",
 		dataType: "json",
 		data: {PAGE:$page,a:'unreadmsg'}
@@ -270,7 +283,7 @@ function loadNewMessages($page){
 		for(k in result.ITEMS){
 			var $addRow = $('<tr>'+
 							  '<td>'+result.ITEMS[k].ID+'</td>'+
-							  '<td><a target="_blank" href="http://tireos.info/company/personal/user/'+result.USER_ID+'/tasks/task/view/'+result.ITEMS[k].ID+'/">'+result.ITEMS[k].TITLE+'</a> ('+result.ITEMS[k].CNT+')</td>'+
+							  '<td><a target="_blank" href="https://tireos.info/company/personal/user/'+result.USER_ID+'/tasks/task/view/'+result.ITEMS[k].ID+'/">'+result.ITEMS[k].TITLE+'</a> ('+result.ITEMS[k].CNT+')</td>'+
 							  '<td>'+result.ITEMS[k].POST_DATE_SHORT+'</td>'+
 							'</tr>');
 			$('#jsUnreadTasks tbody').append($addRow);
