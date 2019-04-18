@@ -1,6 +1,6 @@
 body {margin: 0;overflow:hidden;}
-table.s-plug-table { color: #FFFFFF; width:100%; }
-table.s-plug-table tr td { padding: 5px 5px; white-space:nowrap; }
+table.s-plug-table { color: #FFFFFF; width:100%; width: 600px; max-width: 100%; }
+table.s-plug-table tr td { padding: 5px 5px; }
 table.s-plug-table thead tr td.name {}
 table.s-plug-table thead tr td.task {}
 table.s-plug-table thead tr td.time { width: 50px; }

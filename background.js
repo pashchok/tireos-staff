@@ -178,7 +178,8 @@ function getMailingEvents($result){
 	}
 	
 }
-  
+
+// проверка активности
 function getActivityStatus($result){
 
 	// инициализация параметров
@@ -198,6 +199,7 @@ function getActivityStatus($result){
 		$activityInc++;
 	
 	$ico = $active ? "ico2.png" : "ico.png";
+	console.log('Activity:' + $ico);
 	chrome.browserAction.setIcon({
 	  path : {
 		"48": $ico,
@@ -207,7 +209,7 @@ function getActivityStatus($result){
 	});
 	
 	// каждые 10 минут простоя уведомляем о неактивности
-	if($activityInc > 9){
+	if($activityInc > 10){
 		
 		var date = new Date();
 		new Notification(date.getHours() + ':' + date.getMinutes(), {
@@ -215,6 +217,28 @@ function getActivityStatus($result){
 		});
 		
 		$activityInc = 0;
+		
+	}
+	
+}
+
+// проверка уведомлений о простое
+function checkRemindMsg($result){
+
+	// инициализация параметров
+	if($result == 'Initialize'){
+		$params = {
+			a:'getremind',
+		};
+		return $params;
+	}
+	
+	if($result.length > 0){
+		
+		var date = new Date();
+		new Notification(date.getHours() + ':' + date.getMinutes(), {
+			body: 'Включи счетчик!'
+		});
 		
 	}
 	
@@ -294,7 +318,8 @@ function setNotifications() {
 				'getActivityStatus',
 				'getNewMsgData',
 				'checkLastMessages',
-				'checkLastStoppedBalanceTasks'
+				'checkLastStoppedBalanceTasks',
+				'checkRemindMsg'
 			]);
 			
 			// обновить timestamp

@@ -19,7 +19,6 @@ function loadScript() {
 			if(data.length){
 				var tbody = '',
 					hasActive = false;
-				//tbody += '<tr><td colspan="5" class="search"><input type="text" placeholder="Введите имя задачи для поиска" value="'+data[0].TOTAL.SEARCH+'"></td></tr>';
 				$.each( data, function( key, val ) {
 					var active = ( val.RUN === true ) ? ' active' : '',
 						emptybalance = ( val.BALANCE_EMPTY == true ) ? ' emptybalance' : '';
@@ -29,12 +28,7 @@ function loadScript() {
 						var $activeTime = parseInt(val.RUN_TIME) + parseInt(val.CURRENT_LENGTH);
 						hasActive = true;
 					}
-					//if ( val.RUN_TIME != false && val.RUN_TIME != undefined ) {
-						time = timeFormat(Number(active ? $activeTime : val.RUN_TIME)*1000);
-					//} else {
-					//	val.RUN_TIME = 0;
-					//	time = '';
-					//}
+					time = timeFormat(Number(active ? $activeTime : val.RUN_TIME)*1000);
 					
 					// Если активно - запускаем таймер
 					if(active){
@@ -177,14 +171,6 @@ function loadAddTaskMenu(){
 		dataType: "json"
 	}).done(function(result){
 		$siteList = result;
-		/*$('#content .search .addform .sitefld option').each(function(){
-			if($(this).val())
-				$(this).remove();
-		})
-		for(k in result){
-			var $gname = result[k];
-			$('#content .search .addform .sitefld').append('<option value="'+$gname+'">'+$gname+'</option>');
-		}*/
 		loadFinder($('#sitefld'),$('#sitelist'),$siteList);
 	})
 
@@ -307,6 +293,8 @@ function loadNewMessages($page){
 				$('#jsUnreadTasks .s-plug-paging').append($newPage);
 			}
 		}
+		if(result.ITEMS.length > 0)
+			$('.s-plug-nm-count').html('('+result.ITEMS.length+')');
 	})
 	
 }
