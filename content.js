@@ -4,7 +4,8 @@ var $timer,
 	$msgTimer,
 	$siteList,
 	$curWIndex = 0,
-	$currentVersion = false;
+	$currentVersion = false,
+	$currentXhr = false;
 
 loadScript();
 function loadScript() {
@@ -13,7 +14,12 @@ function loadScript() {
 		var $srch = $('#content .search .sinput input').val();
 		if($srch==undefined)
 			$srch = "";
-		$.getJSON( "https://tireos.info/staff.info.php?task=getTasks&userid=" + localStorage.userid + "&search="+$srch, function( data ) {
+		if($currentXhr){
+			$currentXhr.abort();
+			$currentXhr = false;
+		}
+		showLoader($('.content-wrapper'));
+		$currentXhr = $.getJSON( "https://tireos.info/staff.info.php?task=getTasks&userid=" + localStorage.userid + "&search="+$srch, function( data ) {
 			$('#jsStaff tbody').html('');
 			
 			if(data.length){
@@ -56,13 +62,14 @@ function loadScript() {
 				});
 				
 				var $remain = data[0].TOTAL.TIMEFULL ? '' : ', осталось: '+data[0].TOTAL.REMAIN+'ч';
-				tbody += '<tr><td colspan="5" class="result'+(data[0].TOTAL.TIMEFULL?' full':'')+'">Наработано: '+data[0].TOTAL.TIME+'ч'+$remain+'</td></tr>';
+				tbody += '<tr><td colspan="4" class="result'+(data[0].TOTAL.TIMEFULL?' full':'')+'">Наработано: '+data[0].TOTAL.TIME+'ч'+$remain+'</td></tr>';
 			}else{
 				tbody += '<tr><td class="empty">Ничего не найдено</td></tr>';
 			}
 			
 			$('#jsStaff').html(tbody);
 			addPlayOptions();
+			hideLoader($('body'));
 			$('body').addClass('showed');
 			
 			// Сравнение версий
@@ -81,8 +88,33 @@ function loadScript() {
 					}
 				})
 			}
+			hideLoader($('.content-wrapper'));
 		});
 	}
+}
+
+function showLoader($obj){
+	if(typeof($obj) !== 'object' || !$obj.length)
+		return;
+	
+	var $loader = $obj.find('>.loader');
+	
+	if($loader.length)
+		return;
+	
+	$obj.append($('<div class="loader"></div>'));
+}
+
+function hideLoader($obj){
+	if(typeof($obj) !== 'object' || !$obj.length)
+		return;
+	
+	var $loader = $obj.find('>.loader');
+	
+	if(!$loader.length)
+		return;
+	
+	$loader.remove();
 }
 
 function getRemoteVersion(){

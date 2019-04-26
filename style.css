@@ -1,4 +1,9 @@
-body {margin: 0;overflow:hidden;}
+@keyframes hgrotate {
+ 0 { transform:rotate(180deg); }
+ 30% { transform:rotate(180deg); }
+ 100% { transform:rotate(360deg); }
+}
+body {margin: 0;overflow:hidden;min-width:167px;min-height:36px;}
 table.s-plug-table { color: #FFFFFF; width:100%; width: 600px; max-width: 100%; }
 table.s-plug-table tr td { padding: 5px 5px; }
 table.s-plug-table thead tr td.name {}
@@ -20,14 +25,33 @@ table.s-plug-table tbody tr.emptybalance a { color:#000; }
 #content .search > div.add i { cursor:pointer; font-size:16px; background:#fff; border-radius:50%; line-height:24px; width:24px; height:24px; text-align:center; }
 #content .search > div.sinput { margin:0 0 0 10px; position:relative; height:24px; width:100%; }
 #content .search .sinput input { width:100%; box-sizing:border-box; padding:0 10px; border:none; line-height:24px; }
+#jsTabsContent {
+    margin-bottom: -2px;
+}
+.content-wrapper {position:relative; overflow: hidden;}
 table.s-plug-table .playbtn {cursor:pointer}
-table.s-plug-table .playbtn.wait:before {content:"\f251";}
-#loader {width:151px;height:20px;background:url(images/loader.gif) no-repeat;margin: 8px;}
+table.s-plug-table .playbtn.wait {
+	animation: hgrotate 2s infinite;	
+	transform:rotate(180deg);
+}
+table.s-plug-table .playbtn.wait:before {
+	content:"\f251";
+}
+.loader {
+	background:url(images/loader.gif) no-repeat center;
+	position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255,.8);
+    padding: 0;
+    margin: 0;
+}
 #content {display:none;}
-body.showed #loader {display:none;}
 body.showed #content {display:block;min-width:500px;}
 #content .addform {
-	/*overflow:hidden;*/
 	display:none;
 	position:absolute;
 	left:0;
@@ -37,6 +61,7 @@ body.showed #content {display:block;min-width:500px;}
 	background:#fff;
 	border:#000 solid 1px;
 	border-radius:5px;
+	z-index:3;
 }
 #content .addform.opened { display:block; }
 #content .addform > div {
@@ -133,6 +158,7 @@ body.showed #content {display:block;min-width:500px;}
 	display:block;
 	width:100%;
 	cursor:default;
+	margin-right: 0;
 }
 .s-plug-tabs >*.active {
 	background:#008000;

@@ -13,7 +13,7 @@
 	<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
   </head>
   <body>
-	<div id="loader"></div>
+	<div class="loader"></div>
 	<div id="content">
 		<div class="search" id="jsSearchBlock">
 			<div class="add">
@@ -35,31 +35,33 @@
 				<input type="text" placeholder="Введите имя задачи для поиска" value="">
 			</div>
 		</div>
-		<div id="jsTabs" class="s-plug-tabs" data-for="#jsTabsContent">
-			<div class="active">Выполняемые задачи</div>
-			<div>Новые сообщения<span class="s-plug-nm-count"></span></div>
-		</div>
-		<div id="jsTabsContent">
-			<div>
-				<table id="jsStaff" class="s-plug-table">
-				  <thead>
-					<tr>
-					  <th class="name">Сайт</th>
-					  <th class="task">Задача</th>
-					  <th class="time">Время</th>
-					</tr>
-				  </thead>
-				  <tbody></tbody>
-				</table>
+		<div class="content-wrapper">
+			<div id="jsTabs" class="s-plug-tabs" data-for="#jsTabsContent">
+				<div class="active">Выполняемые задачи</div>
+				<div>Новые сообщения<span class="s-plug-nm-count"></span></div>
 			</div>
-			<div style="display:none;">
-				<table id="jsUnreadTasks" class="s-plug-table">
-				  <tbody>
-					<tr>
-						<td>Новых сообщений не найдено</td>
-					</tr>
-				  </tbody>
-				</table>
+			<div id="jsTabsContent">
+				<div>
+					<table id="jsStaff" class="s-plug-table">
+					  <thead>
+						<tr>
+						  <th class="name">Сайт</th>
+						  <th class="task">Задача</th>
+						  <th class="time">Время</th>
+						</tr>
+					  </thead>
+					  <tbody></tbody>
+					</table>
+				</div>
+				<div style="display:none;">
+					<table id="jsUnreadTasks" class="s-plug-table">
+					  <tbody>
+						<tr>
+							<td>Новых сообщений не найдено</td>
+						</tr>
+					  </tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
