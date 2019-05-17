@@ -35,6 +35,29 @@
 				<input type="text" placeholder="Введите имя задачи для поиска" value="">
 			</div>
 		</div>
+		<form class="search-filter" id="jsSearchFilter">
+			<table class="s-plug-table">
+			<tbody>
+			<tr>
+				<td>
+					<div class="dflex">
+						<div>
+							По статусу:
+						</div>
+						<div>
+							<select name="status">
+								<option value="">Все</option>
+								<option value="2">Ждет выполнения</option>
+								<option value="3">Выполняется</option>
+								<option value="5">Завершена</option>
+							</select>
+						</div>
+					</div>
+				</td>
+			</tr>
+			</tbody>
+			</table>
+		</form>
 		<div class="content-wrapper">
 			<div id="jsTabs" class="s-plug-tabs" data-for="#jsTabsContent">
 				<div class="active">Выполняемые задачи</div>

@@ -49,6 +49,10 @@ table.s-plug-table {
 
         a {
           color: #FFFFFF;
+
+          &:hover {
+            text-decoration: none;
+          }
         }
 
         &.name {
@@ -226,6 +230,16 @@ table.s-plug-table {
     }
   }
 
+}
+
+.dflex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-filter {
+  margin-bottom: -2px;
 }
 
 #jsTabsContent {
