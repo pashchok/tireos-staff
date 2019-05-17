@@ -7,10 +7,12 @@
     <script src="jquery-ui.min.js" type="text/javascript"></script>
     <script src="inputmask.js" type="text/javascript"></script>
     <script src="jquery.inputmask.js" type="text/javascript"></script>
+	<script src="js/fSelect.js" type="text/javascript"></script>
     <script src="content.js" type="text/javascript"></script>
     <link href="style.css" rel="stylesheet" type="text/css"/>
     <link href="jquery-ui.min.css" rel="stylesheet" type="text/css"/>
 	<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+	<link href="css/fSelect.css" rel="stylesheet" type="text/css"/>
   </head>
   <body>
 	<div class="loader"></div>
@@ -42,11 +44,7 @@
 				<td>
 					<div class="dflex">
 						<div>
-							По статусу:
-						</div>
-						<div>
-							<select name="status">
-								<option value="">Все</option>
+							<select class="ls-saved" name="status" multiple>
 								<option value="2">Ждет выполнения</option>
 								<option value="3">Выполняется</option>
 								<option value="5">Завершена</option>

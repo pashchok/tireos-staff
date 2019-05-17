@@ -36,7 +36,7 @@ function loadScript() {
 			data: $data,
 			type: 'POST',
 			dataType: 'JSON',
-			success: function(data){
+			success: function(data, textStatus, xhr){
 				
 				$('#jsStaff tbody').html('');
 				
@@ -109,7 +109,10 @@ function loadScript() {
 				hideLoader($('.content-wrapper'));
 				
 			},
-			error: function(){
+			error: function(jqXHR, textStatus, errorThrown){
+				
+				if(jqXHR.statusText == 'abort')
+					return;
 				
 				$('#jsStaff tbody').html('Не удалось загрузить данные');
 				
@@ -264,6 +267,10 @@ function loadSearch(){
 }
 
 function loadAddTaskMenu(){
+	$('select').fSelect({
+		showSearch: false,
+		placeholder: 'Поиск по статусу'
+	});
 	$('#content .search .addbtn').on('click',function(){
 		$(this).next().toggleClass('opened').find('.namefld').focus();
 	})
