@@ -37,7 +37,9 @@ function loadScript() {
 			type: 'POST',
 			dataType: 'JSON',
 			success: function(data, textStatus, xhr){
-				
+
+				let $dataJson = data;
+
 				$('#jsStaff tbody').html('');
 				
 				if(data.length){
@@ -45,23 +47,36 @@ function loadScript() {
 						hasActive = false;
 					$.each( data, function( key, val ) {
 						var active = ( val.RUN === true ) ? ' active' : '',
-							emptybalance = ( val.BALANCE_EMPTY == true ) ? ' emptybalance' : '';
-						var task = ( val.TITLE != false && val.TITLE != undefined ) ? '<a href="https://tireos.info/company/personal/user/' + val.USER_ID + '/tasks/task/view/' + val.TASK_ID + '/" target="_blank">' + val.TITLE + '</a>' : '';
-						var time;
+							emptybalance = ( val.BALANCE_EMPTY == true ) ? ' emptybalance' : '',
+							task = ( val.TITLE != false && val.TITLE != undefined ) ? '<a href="https://tireos.info/company/personal/user/' + val.USER_ID + '/tasks/task/view/' + val.TASK_ID + '/" target="_blank">' + val.TITLE + '</a>' : '',
+							time,
+                            $activeTime;
+
 						if(active){
-							var $activeTime = parseInt(val.RUN_TIME) + parseInt(val.CURRENT_LENGTH);
 							hasActive = true;
 						}
-						time = timeFormat(Number(active ? $activeTime : val.RUN_TIME)*1000);
-						
+
 						// Если активно - запускаем таймер
 						if(active){
 							var $activeTask = val.TASK_ID;
 							$timer = setInterval(function(){
-								$activeTime++;
+
+                                let $resultTime;
+
+                                val.CURRENT_LENGTH++;
+
+                                $activeTime = parseInt(val.RUN_TIME) + parseInt(val.CURRENT_LENGTH);
 								$('#taskTimer'+$activeTask).html(timeFormat(Number($activeTime)*1000));
+
+                                $resultTime = parseFloat(data[0].TOTAL.TIME) + parseFloat(val.CURRENT_LENGTH/3600);
+                                $('#jsTotalTimer').html($.number($resultTime,2,'.',''));
+
 							},1000);
 						}
+
+                        $activeTime = parseInt(val.RUN_TIME) + parseInt(val.CURRENT_LENGTH);
+                        time = timeFormat(Number(active ? $activeTime : val.RUN_TIME)*1000);
+
 						tbody += '<tr class="' + active + emptybalance + '"'+ (val.BALANCE_EMPTY ? ' title="Баланс требует пополнения, нельзя продолжить"' : '') +'>' +
 									( (val.NO_RUN || val.BALANCE_EMPTY) ? '<td></td>' : '<td class="play"><i class="fa '+(active?'fa-pause':'fa-play')+' playbtn" data-task="'+val.TASK_ID+'" data-user="'+val.USER_ID+'" data-action="'+(active?'stop':'start')+'"></i></td>') +
 									'<td class="name">' + val.SITE + (val.GROUP_BALANCE == false ? '' : '&nbsp;['+val.GROUP_BALANCE+'&nbsp;руб]')+'</td>' +
@@ -80,7 +95,7 @@ function loadScript() {
 					});
 					
 					var $remain = data[0].TOTAL.TIMEFULL ? '' : ', осталось: '+data[0].TOTAL.REMAIN+'ч';
-					tbody += '<tr><td colspan="4" class="result'+(data[0].TOTAL.TIMEFULL?' full':'')+'">Наработано: '+data[0].TOTAL.TIME+'ч'+$remain+'</td></tr>';
+					tbody += '<tr><td colspan="4" class="result'+(data[0].TOTAL.TIMEFULL?' full':'')+'">Наработано: <span id="jsTotalTimer">'+data[0].TOTAL.TIME+'</span>ч'+$remain+'</td></tr>';
 				}else{
 					tbody += '<tr><td class="empty">Ничего не найдено</td></tr>';
 				}
