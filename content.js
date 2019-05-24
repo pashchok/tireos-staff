@@ -95,7 +95,7 @@ function loadScript() {
 					});
 					
 					var $remain = data[0].TOTAL.TIMEFULL ? '' : ', осталось: '+data[0].TOTAL.REMAIN+'ч';
-					tbody += '<tr><td colspan="4" class="result'+(data[0].TOTAL.TIMEFULL?' full':'')+'">Наработано: <span id="jsTotalTimer">'+data[0].TOTAL.TIME+'</span>ч'+$remain+'</td></tr>';
+					tbody += '<tr><td colspan="4" class="result'+(data[0].TOTAL.TIMEFULL?' full':'')+'">Наработано: <span id="jsTotalTimer">'+data[0].TOTAL.TIME_ALL+'</span>ч'+$remain+'</td></tr>';
 				}else{
 					tbody += '<tr><td class="empty">Ничего не найдено</td></tr>';
 				}
