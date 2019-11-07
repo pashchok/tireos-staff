@@ -79,7 +79,7 @@ function loadScript() {
 
 						tbody += '<tr class="' + active + emptybalance + '"'+ (val.BALANCE_EMPTY ? ' title="Баланс требует пополнения, нельзя продолжить"' : '') +'>' +
 									( (val.NO_RUN || val.BALANCE_EMPTY) ? '<td></td>' : '<td class="play"><i class="fa '+(active?'fa-pause':'fa-play')+' playbtn" data-task="'+val.TASK_ID+'" data-user="'+val.USER_ID+'" data-action="'+(active?'stop':'start')+'"></i></td>') +
-									'<td class="name">' + val.SITE + (val.GROUP_BALANCE == false ? '' : '&nbsp;['+val.GROUP_BALANCE+'&nbsp;руб]')+'</td>' +
+									'<td class="name">' + val.SITE + (val.GROUP_BALANCE_TIME == false ? '' : '&nbsp;['+val.GROUP_BALANCE_TIME+'&nbsp;ч]')+'</td>' +
 									'<td class="task">' + task + ' ['+val.TASK_ID+']</td>' +
 									'<td class="time" id="taskTimer'+val.TASK_ID+'">' + (time?time:'00:00:00') + '</td>' +
 								  '</tr>';
@@ -134,77 +134,6 @@ function loadScript() {
 			}
 		})
 		
-		/*$currentXhr = $.getJSON( "https://tireos.info/staff.info.php?task=getTasks&userid=" + localStorage.userid + "&search="+$srch, function( data ) {
-			$('#jsStaff tbody').html('');
-			
-			if(data.length){
-				var tbody = '',
-					hasActive = false;
-				$.each( data, function( key, val ) {
-					var active = ( val.RUN === true ) ? ' active' : '',
-						emptybalance = ( val.BALANCE_EMPTY == true ) ? ' emptybalance' : '';
-					var task = ( val.TITLE != false && val.TITLE != undefined ) ? '<a href="https://tireos.info/company/personal/user/' + val.USER_ID + '/tasks/task/view/' + val.TASK_ID + '/" target="_blank">' + val.TITLE + '</a>' : '';
-					var time;
-					if(active){
-						var $activeTime = parseInt(val.RUN_TIME) + parseInt(val.CURRENT_LENGTH);
-						hasActive = true;
-					}
-					time = timeFormat(Number(active ? $activeTime : val.RUN_TIME)*1000);
-					
-					// Если активно - запускаем таймер
-					if(active){
-						var $activeTask = val.TASK_ID;
-						$timer = setInterval(function(){
-							$activeTime++;
-							$('#taskTimer'+$activeTask).html(timeFormat(Number($activeTime)*1000));
-						},1000);
-					}
-					tbody += '<tr class="' + active + emptybalance + '"'+ (val.BALANCE_EMPTY ? ' title="Баланс требует пополнения, нельзя продолжить"' : '') +'>' +
-								( (val.NO_RUN || val.BALANCE_EMPTY) ? '<td></td>' : '<td class="play"><i class="fa '+(active?'fa-pause':'fa-play')+' playbtn" data-task="'+val.TASK_ID+'" data-user="'+val.USER_ID+'" data-action="'+(active?'stop':'start')+'"></i></td>') +
-								'<td class="name">' + val.SITE + (val.GROUP_BALANCE == false ? '' : '&nbsp;['+val.GROUP_BALANCE+'&nbsp;руб]')+'</td>' +
-								'<td class="task">' + task + ' ['+val.TASK_ID+']</td>' +
-								'<td class="time" id="taskTimer'+val.TASK_ID+'">' + (time?time:'00:00:00') + '</td>' +
-							  '</tr>';
-				});
-				
-				$ico = hasActive ? "ico2.png" : "ico.png";
-				chrome.browserAction.setIcon({
-				  path : {
-					"48": $ico,
-					"64": $ico,
-					"128": $ico
-				  }
-				});
-				
-				var $remain = data[0].TOTAL.TIMEFULL ? '' : ', осталось: '+data[0].TOTAL.REMAIN+'ч';
-				tbody += '<tr><td colspan="4" class="result'+(data[0].TOTAL.TIMEFULL?' full':'')+'">Наработано: '+data[0].TOTAL.TIME+'ч'+$remain+'</td></tr>';
-			}else{
-				tbody += '<tr><td class="empty">Ничего не найдено</td></tr>';
-			}
-			
-			$('#jsStaff').html(tbody);
-			addPlayOptions();
-			hideLoader($('body'));
-			$('body').addClass('showed');
-			
-			// Сравнение версий
-			if(!$currentVersion){
-				var loc = window.location,
-					relativePath = loc.href.substring(0, loc.href.lastIndexOf('/') + 1);
-				$.ajax({
-					url: relativePath+'version.txt',
-					error: function(){},
-					success: function(result){
-						if(result){
-							$currentVersion = result;
-							// Получаем текущую версию на сервере
-							getRemoteVersion();
-						}
-					}
-				})
-			}
-			hideLoader($('.content-wrapper'));
-		});*/
 	}
 }
 
